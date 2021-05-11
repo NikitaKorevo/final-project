@@ -8,9 +8,8 @@
 </head>
 <body>
   <header class="header">
-
-    <nav class="header__nav">
-      <img src="./images/content/house.svg" alt="">
+    <section class="header__sorting">
+      <a href=""><img src="./images/content/house.svg" alt=""></a>
       <input type="search" placeholder="Найти фильм...">
       <p>Сортировать по:</p>
       <select name="" id="">
@@ -19,17 +18,82 @@
       <select name="" id="">
         <option value="">рейтингу</option>
       </select>
-    </nav>
+    </section>
 
-    <div class="header__login-logout">
+    <section class="header__login-logout">
       <button>Вход</button>
+      <span>/</span>
       <button>Регистрация</button>
-    </div>
-
+    </section>
   </header>
 
-  <main>
+  <main class="main">
+    <div class="main__card"></div>
+    <div class="main__card"></div>
+    <div class="main__card"></div>
+    <div class="main__card"></div>
+    <div class="main__card"></div>
 
+    <div class="main__card"></div>
+    <div class="main__card"></div>
+    <div class="main__card"></div>
+    <div class="main__card"></div>
+    <div class="main__card"></div>
   </main>
+
+  <nav class="nav">
+    <div class="nav__arrow-navigation-left">
+      <button></button>
+      <button></button>
+    </div>
+    <div class="nav__numbered-navigation">
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+    </div>
+    <div class="nav__arrow-navigation-right">
+      <button></button>
+      <button></button>
+    </div>
+  </nav>
+
+  <!--Форма авторизации перенести потом-->
+  <form action="" id="form-authorization" class="forms">
+    <div class="forms__wraper">
+
+      <button class="forms__button-close"></button>
+      <p class="forms__title">Авторизация</p>
+        
+      <input type="email" placeholder="E-mail">
+      <input type="password" placeholder="Пароль">
+
+      <div class="forms__container-buttons">
+        <button class="forms__button-finish">Войти</button>
+        <button class="forms__button-link">Зарегистрироваться</button>
+      </div>
+    </div>
+  </form>
+
+  <!--Форма авторизации перенести потом-->
+  <form action="" id="form-registration" class="forms">
+    <div class="forms__wraper" >
+
+      <button class="forms__button-close"></button>
+      <p class="forms__title">Регистрация</p>
+
+      <input type="text" placeholder="Имя">
+      <input type="text" placeholder="Фамилия">
+      <input type="password" placeholder="Пароль">
+      <input type="password" placeholder="Подтвердите пароль">
+      <input type="email" placeholder="E-mail">
+
+      <div class="forms__container-buttons">
+        <button class="forms__button-finish">Зарегистрироваться</button>
+        <button type="reset" class="forms__button-link">Отмена</button>
+      </div>
+    </div>
+  </form>
 </body>
 </html>
