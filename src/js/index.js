@@ -1,11 +1,8 @@
 "use strict";
-const demo = () => 'Webpack Boilerplate v5.6.0 - SASS/PostCSS, ES6/7, browser sync, source code listing and more.';
 
-console.log(demo());
-/* Ключ: 7bbcabd7451880efd46ec7f3f3b268c2
-
+/*
 Запрос на получения фильма  популярности (убывание)
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1 
+https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1
 
 популярности (возрастание)
 https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=ru-RU&sort_by=popularity.asc&include_adult=false&include_video=false&page=1
@@ -35,9 +32,10 @@ https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b2
 */
 
 const myUl = document.getElementById('myUl');
-const ApiKey = '7bbcabd7451880efd46ec7f3f3b268c2';
-let whichSorting = 'popularity.desc';
-let content;
+const apiKey = '7bbcabd7451880efd46ec7f3f3b268c2';
+let whichSortingNow = 'popularity.desc';
+let whichPageNow = 1;
+const maxPage = 15;
 
 const sortingPopularityDecrease = 'popularity.desc';
 const sortingPopularityIncrease = 'popularity.asc';
@@ -46,19 +44,20 @@ const sortingRatingIncrease = 'vote_average.asc';
 const sortingReleaseDecrease = 'release_date.desk';
 const sortingReleaseIncrease = 'release_date.asc';
 
-getResponse(whichSorting);
+getResponse(whichSortingNow, whichPageNow);
 
-async function getResponse(whichSorting) {
-  let response = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + ApiKey + '&language=ru-RU&sort_by=' + whichSorting + '&include_adult=false&include_video=false&page=1');
-  content = await response.json();
+// Функция, которая достаёт данные фильмов из API сайта https://www.themoviedb.org/
+async function getResponse(whichSortingNow, whichPageNow) {
+  myUl.innerHTML = "";
+  let response = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=ru-RU&sort_by=' + whichSortingNow + '&include_adult=false&include_video=false&page=' + whichPageNow);
+  let content = await response.json();
   //console.log(content);
   //console.log(content.results[1]);
-  createCards();
+  createCards(content);
 }
 
-function createCards() {
-  //console.log(content.results.length);
-  //content.results.length
+// Функция, которая создаёт карточки фильмов
+function createCards(content) {
   for (let i = 0; i < content.results.length; i++) {
 
     const li = document.createElement('li');
@@ -67,72 +66,185 @@ function createCards() {
     const pRating = document.createElement('p');
     const pRelease = document.createElement('p');
 
-    let  nodeTitle = document.createTextNode(content.results[i].title);
-    let  nodeAttributeSrc = 'https://image.tmdb.org/t/p/w300' + content.results.[i].poster_path;
-    let  nodeRating = document.createTextNode('Рейтинг: ' + content.results[i].vote_average);
-    let  nodeRelease = document.createTextNode('Дата релиза: ' + content.results[i].release_date);
+    let nodeTitle = document.createTextNode(content.results[i].title);
+    let nodeAttributeSrc = 'https://image.tmdb.org/t/p/w300' + content.results[i].poster_path;
+    if (content.results[i].poster_path === null) nodeAttributeSrc = './images/content/notFoundImage.jpg';
+    let nodeRating = document.createTextNode('Рейтинг: ' + content.results[i].vote_average);
+    let nodeRelease = document.createTextNode('Дата релиза: ' + content.results[i].release_date);
 
     h2.appendChild(nodeTitle);
     pRating.appendChild(nodeRating);
     pRelease.appendChild(nodeRelease);
-    
+
     li.appendChild(img);
     li.appendChild(pRating);
     li.appendChild(pRelease);
     li.appendChild(h2);
-    
+
     li.classList.add('all-cards__card');
     h2.classList.add('all-cards-card__title');
     img.classList.add('all-cards-card__img');
     img.setAttribute('src', nodeAttributeSrc);
     pRating.classList.add('all-cards-card__rating');
     pRelease.classList.add('all-cards-card__release');
-    
+
     myUl.appendChild(li);
   }
 }
 
+// Функция, которая узнает как отсортировать (по популярности, рейтингу, дате релиза)
 document.getElementById('SelectSorting').onchange = function() {
-  myUl.innerHTML = "";
-  
-  //console.log(this.options[this.selectedIndex].value);
+  search.value = '';
+  myUl.innerHTML = '';
 
-
-   switch (this.options[this.selectedIndex].value) {
+  switch (this.options[this.selectedIndex].value) {
     case 'popularity-decrease':
       console.log('1');
-      whichSorting = sortingPopularityDecrease;
+      whichSortingNow = sortingPopularityDecrease;
       break;
 
     case 'popularity-increase':
       console.log('2');
-      whichSorting = sortingPopularityIncrease;
+      whichSortingNow = sortingPopularityIncrease;
       break;
 
     case 'rating-decrease':
       console.log('3')
-      whichSorting = sortingRatingDecrease;
+      whichSortingNow = sortingRatingDecrease;
       break;
 
     case 'rating-increase':
       console.log('4');
-      whichSorting = sortingRatingIncrease;
+      whichSortingNow = sortingRatingIncrease;
       break;
 
     case 'release-decrease':
       console.log('5');
-      whichSorting = sortingReleaseDecrease;
+      whichSortingNow = sortingReleaseDecrease;
       break;
 
     case 'release-increase':
       console.log('6');
-      whichSorting = sortingReleaseIncrease;
+      whichSortingNow = sortingReleaseIncrease;
       break;
 
     default:
       console.log('Error with sorting');
       break;
   }
+  getResponse(whichSortingNow);
+}
 
-  getResponse(whichSorting);
+// Функция, которая узнает цифру на кликнутую кнопку
+const numberedNavigation = document.querySelector('.nav__numbered-navigation');
+numberedNavigation.addEventListener('click', findOutNumberButton);
+
+function findOutNumberButton(e) {
+  if (numberedNavigation === e.target) return;
+
+  whichPageNow = Number(e.target.childNodes[0].nodeValue);
+  console.log(whichPageNow);//
+  redrawButtons();
+}
+
+// Функция, которая перерисовывает цифры на кнопках
+function redrawButtons() {
+  search.value = '';
+
+  if (whichPageNow <= 3) {
+    numberedNavigation.children[0].textContent = 1;
+    numberedNavigation.children[1].textContent = 2;
+    numberedNavigation.children[2].textContent = 3;
+    numberedNavigation.children[3].textContent = 4;
+    numberedNavigation.children[4].textContent = 5;
+  }
+  if (whichPageNow > 3 && whichPageNow <= maxPage - 3) {
+    numberedNavigation.children[0].textContent = whichPageNow - 2;
+    numberedNavigation.children[1].textContent = whichPageNow - 1;
+    numberedNavigation.children[2].textContent = whichPageNow;
+    numberedNavigation.children[3].textContent = whichPageNow + 1;
+    numberedNavigation.children[4].textContent = whichPageNow + 2;
+  }
+  if (whichPageNow > maxPage - 3) {
+    numberedNavigation.children[0].textContent = maxPage - 4;
+    numberedNavigation.children[1].textContent = maxPage - 3;
+    numberedNavigation.children[2].textContent = maxPage - 2;
+    numberedNavigation.children[3].textContent = maxPage - 1;
+    numberedNavigation.children[4].textContent = maxPage;
+  }
+  // Добавляется класс нажатой кнопке
+  for (let i = 0; i < 5; i++) {
+    if (numberedNavigation.children[i].classList.contains('nav-numbered-navigation__button') === true) {
+      numberedNavigation.children[i].classList.remove('nav-numbered-navigation__button');
+    }
+    if (Number(numberedNavigation.children[i].textContent) === whichPageNow) {
+      numberedNavigation.children[i].classList.add('nav-numbered-navigation__button');
+    }
+  }
+  getResponse(whichSortingNow, whichPageNow);
+}
+
+// Фунция, которая перелистывает в начало
+document.getElementById('buttonFirstPage').addEventListener("click", browseFirstPage);
+function browseFirstPage() {
+  if (whichPageNow !== 1) {
+    whichPageNow = 1;
+    console.log(whichPageNow);//
+    myUl.innerHTML = '';
+    getResponse(whichSortingNow, whichPageNow);
+    redrawButtons();
+  }
+}
+
+// Фунция, которая перелистывает в конец
+document.getElementById('buttonLastPage').addEventListener("click", browseLastPage);
+function browseLastPage() {
+  if (whichPageNow !== maxPage) {
+    whichPageNow = maxPage;
+    console.log(whichPageNow);//
+    myUl.innerHTML = '';
+    getResponse(whichSortingNow, whichPageNow);
+    redrawButtons();//
+  }
+}
+
+// Фунция, которая перелистывает 1 страницу назад
+document.getElementById('buttonPreviousPage').addEventListener("click", browsePreviousPage);
+function browsePreviousPage() {
+  if (whichPageNow > 1) {
+    whichPageNow -= 1;
+    console.log(whichPageNow);//
+    myUl.innerHTML = '';
+    getResponse(whichSortingNow, whichPageNow);
+    redrawButtons();
+  }
+}
+
+// Фунция, которая перелистывает 1 страницу вперед
+document.getElementById('buttonNextPage').addEventListener("click", browseNextPage);
+function browseNextPage() {
+  if (whichPageNow < maxPage) {
+    whichPageNow += 1;
+    console.log(whichPageNow);//
+    myUl.innerHTML = '';
+    getResponse(whichSortingNow, whichPageNow);
+    redrawButtons();
+  }
+}
+
+// Поиск по фильмом
+const search = document.getElementById('inputSearch');
+search.addEventListener('keyup', SearchMovie);
+
+async function SearchMovie() {
+  let searchContent = await fetch('https://api.themoviedb.org/3/search/movie?api_key='+ apiKey +'&language=ru-RU&query='+ search.value +'&page=1&include_adult=false');
+  searchContent = await searchContent.json();
+  console.log(searchContent);
+  console.log(search.value);
+  myUl.innerHTML = '';
+  if (search.value === '') {
+    getResponse(whichSortingNow, whichPageNow);
+  } else {
+    createCards(searchContent);
+  }
 }

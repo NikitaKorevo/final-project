@@ -6,8 +6,12 @@ body {
   font-size: 16px;
   color: $white;
   font-weight: 400;
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
+
+  @media screen and (max-width: 1300px) {
+    width: 1100px;
+  }
 }
 
 .header {
@@ -102,17 +106,17 @@ body {
     display: grid;
     justify-content: space-between;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 100px 15px;
+    gap: 80px 15px;
+
+    @media screen and (max-width: 1300px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 
     .all-cards__card {
       position: relative;
       width: 1fr;
       min-height: 350px;
-      /* background-color: orange; // для того чтобы увидеть размер блока;
-      z-index: -2; */
-      /* & img:hover ~ p{
-          display: none;
-      } */
+
       .all-cards-card__title {
         font-size: 20px;
         font-weight: 500;
@@ -159,17 +163,12 @@ body {
         filter: brightness(0.3);
         transition: 0.3s;
       }
-      
     }
   }
 }
-/* .results-cards__card:hover .cards-card__text{
-  visibility: visible; 
-  opacity: 1;
-} */
 
 .nav {
-  margin: 90px 0 90px;
+  margin: 80px 0 90px;
   display: flex;
   justify-content: center;
   
@@ -194,11 +193,15 @@ body {
       &:hover {
         background-color: #C7CCFF;
       }
+      &:active {
+        background-color: #7981CA;
+      }
     }
   }
 
   &__numbered-navigation {
     margin: 0 30px;
+
     button {
       font-size: 16px;
       font-weight: 400;
@@ -212,6 +215,13 @@ body {
       &:hover {
         background-color: #C7CCFF;
       }
+      &:active {
+        background-color: #7981CA;
+      }
+    }
+    
+    .nav-numbered-navigation__button {
+      border: 2px solid #E9EBFF;
     }
   }
 
@@ -237,12 +247,16 @@ body {
       &:hover {
         background-color: #C7CCFF;
       }
+      &:active {
+        background-color: #7981CA;
+      }
     }
   }
 }
 
 // Форма авторизации. Перенести позже!
 .forms {
+  display: none;
   position: relative;
   width: 460px;
   background-color: #394398;

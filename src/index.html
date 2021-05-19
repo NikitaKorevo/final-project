@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Каталог фильмов, сериалов</title>
+  <title>Каталог фильмов</title>
 </head>
 <body>
   <header class="header">
-    <h1 class="header__background-title">Каталог фильмов, сериалов</h1>
+    <h1 class="header__background-title">Каталог фильмов</h1>
     <section class="header__sorting">
       <a href=""><img src="./images/content/house.svg" alt=""></a>
-      <input type="search" placeholder="Найти фильм...">
+      <input id="inputSearch" type="search" placeholder="Найти фильм...">
       <p>Сортировать по:</p>
       <select name="SelectSorting" id="SelectSorting">
         <option value="popularity-decrease">популярности (убывание)</option>
@@ -21,9 +21,6 @@
         <option value="release-decrease">дате релиза (убывание)</option>
         <option value="release-increase">дате релиза (возрастание)</option>
       </select>
-      <!-- <select name="" id="">
-        <option value="">рейтингу</option>
-      </select> -->
     </section>
 
     <section class="header__login-logout">
@@ -35,85 +32,30 @@
 
   <main class="main">
     <ul id="myUl" class="main__all-cards">
-      <!-- <li class="all-cards__card">
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
+      <!--  <li class="all-cards__card">
+        <img class="all-cards-card__img" src='./images/content/notFoundImage.jpg' alt="">
         <p class="all-cards-card__rating">Рейтинг: 7.7</p>
         <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
         <h2 class="all-cards-card__title">"Tom Clancy's Without Remorse"</h2>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">"Леди Баг и Супер-Кот"</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>
-      <li class="all-cards__card">
-        <h2 class="all-cards-card__title">Mortal Kombat</h2>
-        <img class="all-cards-card__img" src="https://image.tmdb.org/t/p/w300/xGuOF1T3WmPsAcQEQJfnG7Ud9f8.jpg" alt="">
-        <p class="all-cards-card__rating">Рейтинг: 7.7</p>
-        <p class="all-cards-card__release">Дата релиза: 2021-04-07</p>
-      </li>  --> 
+      </li>-->
     </ul>
   </main>
 
   <nav class="nav">
     <div class="nav__arrow-navigation-left">
-      <button></button>
-      <button></button>
+      <button id="buttonFirstPage"></button>
+      <button id="buttonPreviousPage"></button>
     </div>
     <div class="nav__numbered-navigation">
-      <button>1</button>
+      <button class="nav-numbered-navigation__button">1</button>
       <button>2</button>
       <button>3</button>
       <button>4</button>
       <button>5</button>
     </div>
     <div class="nav__arrow-navigation-right">
-      <button></button>
-      <button></button>
+      <button id="buttonNextPage"></button>
+      <button id="buttonLastPage"></button>
     </div>
   </nav>
 
