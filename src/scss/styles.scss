@@ -84,14 +84,12 @@ body {
     }
   }
   &__login-logout {
-    button {
+
+    a {
       font-size: 16px;
       font-weight: 400;
       color: $white;
       line-height: 19px;
-      background-color: $body-background-color;
-      border: 1px solid $body-background-color;
-      
       &:hover {
         border-bottom: 1px solid $white;
       }
@@ -255,22 +253,22 @@ body {
   }
 }
 
-// Форма авторизации. Перенести позже!
+// scss для форм регистрации и авторизации
 .forms {
-  display: none;
   position: relative;
   width: 460px;
   background-color: #394398;
   border-radius: 19px;
   padding: 40px 0 60px;
-  margin-bottom: 20px; // лишнее
+  margin: 50px auto 0;
 
   .forms__wraper {
     width: 284px;
     margin: 0 auto;
   }
 
-    .forms__button-close{
+    // Кнопка закрытия для модального окна
+    /* .forms__button-close{
       position: absolute;
       top: 0;
       right: 0;
@@ -282,7 +280,7 @@ body {
       border-radius: 4px;
       border-top-right-radius: 19px;
       border-bottom-left-radius: 19px;
-    }
+    } */
 
     .forms__title {
       font-size: 23px;
