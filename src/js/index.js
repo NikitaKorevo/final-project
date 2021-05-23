@@ -44,15 +44,13 @@ const sortingRatingIncrease = 'vote_average.asc';
 const sortingReleaseDecrease = 'release_date.desk';
 const sortingReleaseIncrease = 'release_date.asc';
 
-getResponse(whichSortingNow, whichPageNow);
+getResponse();
 
 // Функция, которая достаёт данные фильмов из API сайта https://www.themoviedb.org/
-async function getResponse(whichSortingNow, whichPageNow) {
-  myUl.innerHTML = "";
+async function getResponse() {
+  myUl.innerHTML = '';
   let response = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=ru-RU&sort_by=' + whichSortingNow + '&include_adult=false&include_video=false&page=' + whichPageNow);
   let content = await response.json();
-  //console.log(content);
-  //console.log(content.results[1]);
   createCards(content);
 }
 
@@ -66,9 +64,13 @@ function createCards(content) {
     const pRating = document.createElement('p');
     const pRelease = document.createElement('p');
 
-    let nodeTitle = document.createTextNode(content.results[i].title);
+    let nodeReleaseYear = '';
+    if (content.results[i].release_date !== '') nodeReleaseYear = ' (' + content.results[i].release_date.slice(0, 4) + ')';
+    let nodeTitle = document.createTextNode(content.results[i].title + nodeReleaseYear);
+
     let nodeAttributeSrc = 'https://image.tmdb.org/t/p/w300' + content.results[i].poster_path;
     if (content.results[i].poster_path === null) nodeAttributeSrc = './images/content/notFoundImage.jpg';
+
     let nodeRating = document.createTextNode('Рейтинг: ' + content.results[i].vote_average);
     let nodeRelease = document.createTextNode('Дата релиза: ' + content.results[i].release_date);
 
@@ -99,32 +101,26 @@ document.getElementById('SelectSorting').onchange = function() {
 
   switch (this.options[this.selectedIndex].value) {
     case 'popularity-decrease':
-      console.log('1');
       whichSortingNow = sortingPopularityDecrease;
       break;
 
     case 'popularity-increase':
-      console.log('2');
       whichSortingNow = sortingPopularityIncrease;
       break;
 
     case 'rating-decrease':
-      console.log('3')
       whichSortingNow = sortingRatingDecrease;
       break;
 
     case 'rating-increase':
-      console.log('4');
       whichSortingNow = sortingRatingIncrease;
       break;
 
     case 'release-decrease':
-      console.log('5');
       whichSortingNow = sortingReleaseDecrease;
       break;
 
     case 'release-increase':
-      console.log('6');
       whichSortingNow = sortingReleaseIncrease;
       break;
 
@@ -143,7 +139,6 @@ function findOutNumberButton(e) {
   if (numberedNavigation === e.target) return;
 
   whichPageNow = Number(e.target.childNodes[0].nodeValue);
-  console.log(whichPageNow);//
   redrawButtons();
 }
 
@@ -185,11 +180,10 @@ function redrawButtons() {
 }
 
 // Фунция, которая перелистывает в начало
-document.getElementById('buttonFirstPage').addEventListener("click", browseFirstPage);
+document.getElementById('buttonFirstPage').addEventListener('click', browseFirstPage);
 function browseFirstPage() {
   if (whichPageNow !== 1) {
     whichPageNow = 1;
-    console.log(whichPageNow);//
     myUl.innerHTML = '';
     getResponse(whichSortingNow, whichPageNow);
     redrawButtons();
@@ -197,23 +191,21 @@ function browseFirstPage() {
 }
 
 // Фунция, которая перелистывает в конец
-document.getElementById('buttonLastPage').addEventListener("click", browseLastPage);
+document.getElementById('buttonLastPage').addEventListener('click', browseLastPage);
 function browseLastPage() {
   if (whichPageNow !== maxPage) {
     whichPageNow = maxPage;
-    console.log(whichPageNow);//
     myUl.innerHTML = '';
     getResponse(whichSortingNow, whichPageNow);
-    redrawButtons();//
+    redrawButtons();
   }
 }
 
 // Фунция, которая перелистывает 1 страницу назад
-document.getElementById('buttonPreviousPage').addEventListener("click", browsePreviousPage);
+document.getElementById('buttonPreviousPage').addEventListener('click', browsePreviousPage);
 function browsePreviousPage() {
   if (whichPageNow > 1) {
     whichPageNow -= 1;
-    console.log(whichPageNow);//
     myUl.innerHTML = '';
     getResponse(whichSortingNow, whichPageNow);
     redrawButtons();
@@ -221,11 +213,10 @@ function browsePreviousPage() {
 }
 
 // Фунция, которая перелистывает 1 страницу вперед
-document.getElementById('buttonNextPage').addEventListener("click", browseNextPage);
+document.getElementById('buttonNextPage').addEventListener('click', browseNextPage);
 function browseNextPage() {
   if (whichPageNow < maxPage) {
     whichPageNow += 1;
-    console.log(whichPageNow);//
     myUl.innerHTML = '';
     getResponse(whichSortingNow, whichPageNow);
     redrawButtons();
@@ -237,11 +228,10 @@ const search = document.getElementById('inputSearch');
 search.addEventListener('keyup', SearchMovie);
 
 async function SearchMovie() {
-  let searchContent = await fetch('https://api.themoviedb.org/3/search/movie?api_key='+ apiKey +'&language=ru-RU&query='+ search.value +'&page=1&include_adult=false');
+  let searchContent = await fetch('https://api.themoviedb.org/3/search/movie?api_key=' + apiKey + '&language=ru-RU&query=' + search.value + '&page=1&include_adult=false');
   searchContent = await searchContent.json();
-  console.log(searchContent);
-  console.log(search.value);
   myUl.innerHTML = '';
+
   if (search.value === '') {
     getResponse(whichSortingNow, whichPageNow);
   } else {
