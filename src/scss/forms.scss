@@ -1,0 +1,88 @@
+// scss для форм регистрации и авторизации
+.forms {
+  position: relative;
+  width: 460px;
+  background-color: #394398;
+  border-radius: 19px;
+  padding: 40px 0 60px;
+  margin: 50px auto 0;
+
+  .forms__wraper {
+    width: 284px;
+    margin: 0 auto;
+  }
+
+    // Кнопка закрытия для модального окна
+    /* .forms__button-close{
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: url(../images/icons/close.svg) no-repeat 10px 10px;
+      background-color: #B8BBFF;
+      border: none;
+      border-radius: 4px;
+      border-top-right-radius: 19px;
+      border-bottom-left-radius: 19px;
+    } */
+
+    .forms__title {
+      font-size: 23px;
+      font-weight: 500;
+      line-height: 23px;
+      color: #8DA2FF;
+      margin: 0 0 30px;
+    }
+
+  
+
+  input {
+    width: 100%;
+    height: 45px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: $black;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    padding: 15px;
+  }
+  input::placeholder {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 15px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+   input:last-of-type {
+    margin-bottom: 40px;
+  } 
+
+  .forms__container-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .forms__button-finish {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 36px;
+      padding: 0 15px;
+      color: $black;
+      background-color: #B8BBFF;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .forms__button-link {
+      height: 20px;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 17px;
+      color: $black;
+      border: none;
+      background-color: #394398;
+    }
+  }
+}
