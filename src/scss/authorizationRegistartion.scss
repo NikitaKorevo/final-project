@@ -1,4 +1,16 @@
 // scss для форм регистрации и авторизации
+body {
+  position: relative;
+  background: $body-background-color;
+  color: $white;
+  font-family: 'Roboto', arial, serif;
+  font-size: 16px;
+  color: $white;
+  font-weight: 400;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .forms {
   position: relative;
   width: 460px;

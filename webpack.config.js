@@ -18,7 +18,7 @@ const templateFiles = fs.readdirSync(environment.paths.source)
   .filter((file) => path.extname(file).toLowerCase() === '.html');
 
 const htmlPluginEntries = templateFiles.map((template) => new HTMLWebpackPlugin({
-  inject: true,
+  inject: false,
   hash: false,
   filename: template,
   template: path.resolve(environment.paths.source, template),
@@ -28,6 +28,8 @@ const htmlPluginEntries = templateFiles.map((template) => new HTMLWebpackPlugin(
 module.exports = {
   entry: {
     app: path.resolve(environment.paths.source, 'js', 'app.js'),
+    app2: path.resolve(environment.paths.source, 'js', 'app2.js'),
+    app3: path.resolve(environment.paths.source, 'js', 'app3.js'),
   },
   output: {
     filename: 'js/[name].js',
