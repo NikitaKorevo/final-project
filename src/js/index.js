@@ -1,43 +1,11 @@
 "use strict";
 
-/*
-Запрос на получения фильма  популярности (убывание)
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1
-
-популярности (возрастание)
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=ru-RU&sort_by=popularity.asc&include_adult=false&include_video=false&page=1
-
-рейтингу (убывание)
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=ru-RU&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1
-
-рейтингу (возрастание)
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=ru-RU&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1
-
-дате релиза (убывание)
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=ru-RU&sort_by=release_date.desk&include_adult=false&include_video=false&page=1
-
-дате релиза (возрастание)
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&language=ru-RU&sort_by=release_date.asc&include_adult=false&include_video=false&page=1
-
-
-главная страница https://developers.themoviedb.org/3/discover/movie-discover
-Получить фильмы по жанрам:
-https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=7bbcabd7451880efd46ec7f3f3b268c2
-
-аватарка фильма:
-https://image.tmdb.org/t/p/w300/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
-
-https://api.themoviedb.org/3/discover/movie?api_key=7bbcabd7451880efd46ec7f3f3b268c2&sort_by=vote_count.desc&page=1
-
-*/
-
 const myUl = document.getElementById('myUl');
 const apiKey = '7bbcabd7451880efd46ec7f3f3b268c2';
 let whichSortingNow = 'popularity.desc';
-let content;
 let whichPageNow = 1;
 const maxPage = 15;
-let indexFilm;
+let indexFilm = 0;
 
 const sortingPopularityDecrease = 'popularity.desc';
 const sortingPopularityIncrease = 'popularity.asc';
@@ -51,47 +19,48 @@ getResponse();
 // Функция, которая достаёт данные фильмов из API сайта https://www.themoviedb.org/
 async function getResponse() {
   myUl.innerHTML = '';
-  let response = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=ru-RU&sort_by=' + whichSortingNow + '&include_adult=false&include_video=false&page=' + whichPageNow);
-  content = await response.json();
-  createCards();
+  const response = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&language=ru-RU&sort_by=' + whichSortingNow + '&include_adult=false&include_video=false&page=' + whichPageNow);
+  const content = await response.json();
+  localStorage.setItem('localContent', JSON.stringify(content.results));
+  createCards(content);
 }
 
 // Функция, которая создаёт карточки фильмов
-function createCards() {
+function createCards(content) {
   for (let i = 0; i < content.results.length; i++) {
-  
+
     const li = document.createElement('li');
     const h2 = document.createElement('h2');
     const img = document.createElement('img');
     const pRating = document.createElement('p');
     const pRelease = document.createElement('p');
-  
+
     let nodeReleaseYear = '';
     if (content.results[i].release_date !== '') nodeReleaseYear = ' (' + content.results[i].release_date.slice(0, 4) + ')';
-    let nodeTitle = document.createTextNode(content.results[i].title + nodeReleaseYear);
-  
+    const nodeTitle = document.createTextNode(content.results[i].title + nodeReleaseYear);
+
     let nodeAttributeSrc = 'https://image.tmdb.org/t/p/w300' + content.results[i].poster_path;
     if (content.results[i].poster_path === null) nodeAttributeSrc = './images/content/notFoundImage.jpg';
-  
-    let nodeRating = document.createTextNode('Рейтинг: ' + content.results[i].vote_average);
-    let nodeRelease = document.createTextNode('Дата релиза: ' + content.results[i].release_date);
-  
+
+    const nodeRating = document.createTextNode('Рейтинг: ' + content.results[i].vote_average);
+    const nodeRelease = document.createTextNode('Дата релиза: ' + content.results[i].release_date);
+
     h2.appendChild(nodeTitle);
     pRating.appendChild(nodeRating);
     pRelease.appendChild(nodeRelease);
-  
+
     li.appendChild(img);
     li.appendChild(pRating);
     li.appendChild(pRelease);
     li.appendChild(h2);
-  
+
     li.classList.add('all-cards__card');
     h2.classList.add('all-cards-card__title');
     img.classList.add('all-cards-card__img');
     img.setAttribute('src', nodeAttributeSrc);
     pRating.classList.add('all-cards-card__rating');
     pRelease.classList.add('all-cards-card__release');
-  
+
     myUl.appendChild(li);
   }
 }
@@ -105,27 +74,27 @@ document.getElementById('SelectSorting').onchange = function() {
     case 'popularity-decrease':
       whichSortingNow = sortingPopularityDecrease;
       break;
-  
+
     case 'popularity-increase':
       whichSortingNow = sortingPopularityIncrease;
       break;
-  
+
     case 'rating-decrease':
       whichSortingNow = sortingRatingDecrease;
       break;
-  
+
     case 'rating-increase':
       whichSortingNow = sortingRatingIncrease;
       break;
-  
+
     case 'release-decrease':
       whichSortingNow = sortingReleaseDecrease;
       break;
-  
+
     case 'release-increase':
       whichSortingNow = sortingReleaseIncrease;
       break;
-  
+
     default:
       console.log('Error with sorting');
       break;
@@ -242,11 +211,12 @@ async function SearchMovie() {
 }
 
 // функция, которая открывает новую вкладку(aboutfilm.html) с описанием фильма
-/* myUl.addEventListener('click', openPageAboutFilmHTML);
+myUl.addEventListener('click', openPageAboutFilmHTML);
 function openPageAboutFilmHTML(e) {
   if (e.target === myUl) return;
   if (e.target.classList.contains('all-cards__card')) return;
 
   indexFilm = [...myUl.children].indexOf(e.target.parentNode);
+  localStorage.setItem('localIndexFilm', indexFilm);
   window.open('aboutfilm.html');
-} */
+}
