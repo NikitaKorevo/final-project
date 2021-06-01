@@ -8,9 +8,39 @@ body {
   font-weight: 400;
   max-width: 1200px;
   margin: 0 auto;
+  @media screen and (max-width: 1250px) {
+    padding: 10px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 750px;
+  }
 }
 
 .main-aboutfilm {
   display: flex;
   flex-direction: row;
+  margin-top: 45px;
+
+  &__link-home {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+  }
+
+  &__poster {
+    min-width: 300px;
+    border-radius: 16px;
+    margin-right: 35px;
+    margin-left: 35px;
+  }
+
+  &__content {
+    p {
+      margin-top: 20px;
+    }
+    .main-aboutfilm-content__title {
+      font-size: 25px;
+      margin-bottom: 30px;
+    }
+  }
 }
