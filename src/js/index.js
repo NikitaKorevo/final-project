@@ -207,6 +207,7 @@ async function SearchMovie() {
     getResponse(whichSortingNow, whichPageNow);
   } else {
     createCards(searchContent);
+    localStorage.setItem('localContent', JSON.stringify(searchContent.results));
   }
 }
 
